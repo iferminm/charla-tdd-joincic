@@ -5,11 +5,10 @@ from django.contrib.auth.models import User
 
 SEX_CHOICES = (
     ('f', 'Female'),
-    ('m', 'Male',),
+    ('m', 'Male'),
 )
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    avatar = models.URLField()
     address = models.TextField()
     sex = models.CharField(max_length=1, choices=SEX_CHOICES)
     telephone = models.CharField(max_length=32)
@@ -19,7 +18,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-def RegistrationProfile(models.Model):
+class RegistrationProfile(models.Model):
     user = models.OneToOneField(User)
     token = models.CharField(max_length=32)
     encoded = models.CharField(max_length=256)
@@ -61,7 +60,7 @@ class MovieSample(models.Model):
 
 
 class Movie(models.Model):
-    actors = models.ManyToManyField(User)
+    actors = models.ManyToManyField(User, null=True, blank=True)
     title = models.CharField(max_length=64)
     description = models.TextField()
 
