@@ -18,6 +18,16 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
 
+
+def RegistrationProfile(models.Model):
+    user = models.OneToOneField(User)
+    token = models.CharField(max_length=32)
+    encoded = models.CharField(max_length=256)
+
+    def __unicode__(self):
+        return self.user.username
+
+
 class ActionShoot(models.Model):
     image = models.ImageField(upload_to='action_shoots')
     thumbnail = models.ImageField(upload_to='action_shoots_thumbs')
@@ -40,6 +50,7 @@ class ActorProfile(models.Model):
     def __unicode__(self):
         return self.user.full_name
         
+
 class MovieSample(models.Model):
     image = models.ImageField(upload_to='movie_samples')
     thumbnail = models.ImageField(upload_to='movie_samples_thumbs')
@@ -57,6 +68,7 @@ class Movie(models.Model):
     def __unicode__(self):
         return self.title
 
+
 class MovieReview(models.Model):
     user = models.ForeignKey(User)
     movie = models.ForeignKey(Movie)
@@ -65,11 +77,21 @@ class MovieReview(models.Model):
     def __unicode__(self):
         return self.text[:140]
 
+
 class Comment(models.Model):
     user_from = models.ForeignKey(User)
-    user_to = models.ForeignKey(User)
+    review = models.ForeignKey(MovieReview)
     when = models.DateTimeField()
     text = models.TextField()
 
     def __unicode__(self):
         return self.text[:140]
+
+
+class Prize(models.Model):
+    name = models.CharField(max_length=64)
+    description = models.TextField()
+    qty = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return '%s | %s' % (self.name, self.qty)
