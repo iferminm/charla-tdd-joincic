@@ -40,6 +40,7 @@ class PremioTest(TestCase):
         self.user = UserFactory()
         self.post_data = {'text': 'Esta pelicula es genial'}
         self.movie = MovieFactory()
+        self.movie.save()
         self.client.login(username=self.user.username, password='1234')
 
     def test_premio(self):
